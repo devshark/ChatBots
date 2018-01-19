@@ -51,10 +51,7 @@ Cloudiness: ${c.clouds.all}%`
             reject(new Error('Result is not OK!'))
           }
         })
-        .catch(err => {
-          console.debug('tae', err)
-          reject(err)
-        })
+        .catch(reject)
     })
   }
 }
