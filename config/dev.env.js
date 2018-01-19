@@ -4,5 +4,5 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  LOG_LEVEL: '"info"'
+  LOG_LEVEL: '"debug"'
 })
