@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Vue from 'vue'
 
 const xhr = axios.create({
   baseURL: `${process.env.API_WEATHER_ENDPOINT}`, // root API endpoint
@@ -10,7 +11,7 @@ const xhr = axios.create({
 
 export default {
   getByCity: function (cityName) {
-    if (cityName === undefined) throw new Error('City Name is required')
+    if (typeof cityName === 'undefined') throw new Error('City Name is required')
     return new Promise((resolve, reject) => {
       xhr.get('/', {
         params: {
@@ -20,17 +21,17 @@ export default {
         }
       })
         .then(response => {
-          console.log(response, response.data)
+          Vue.$log.debug(response, response.data)
           if (response.status === 200) {
             let c = response.data
             let date = new Date(c.dt * 1000).toUTCString()
             let sunrise = new Date(c.sys.sunrise * 1000).toUTCString()
             let sunset = new Date(c.sys.sunset * 1000).toUTCString()
             let topData = c.weather.map(q => q.main + ' - ' + q.description)
-            if (c.rain !== undefined) {
+            if (typeof c.rain !== 'undefined') {
               topData.push('Rain volume for the last 3 hours: ' + c.rain['3h'])
             }
-            if (c.snow !== undefined) {
+            if (typeof c.snow !== 'undefined') {
               topData.push('Snow volume for the last 3 hours: ' + c.snow['3h'])
             }
             topData = topData.join('\n')
@@ -53,5 +54,17 @@ Cloudiness: ${c.clouds.all}%`
         })
         .catch(reject)
     })
+  },
+  getCommands: function () {
+    return `###Weather bot
+####Purpose
+To display a summary of the weather condition in a specified city.
+####Command syntax
+The command keyword is **!weather**.
+Enter the name of a city as the first argument.
+\`\`\`
+!weather Hong Kong
+\`\`\`
+`
   }
 }
