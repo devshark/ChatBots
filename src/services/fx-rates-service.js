@@ -168,6 +168,7 @@ You can also set this in combination of the previous commands.
 !fx 2018-01-15 EUR,GBP,HKD
 !fx 2018-01-15 EUR HKD
 !fx 2018-01-15 EUR USD,GBP,HKD
+\`\`\`
 `
   }
 }
