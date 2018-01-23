@@ -34,6 +34,9 @@ export default {
         this.$log.error(ex)
       }
     }
+  },
+  mounted: function () {
+    this.login()
   }
 }
 </script>
